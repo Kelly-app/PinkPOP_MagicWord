@@ -1,6 +1,6 @@
 import streamlit as st
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 import spacy
 import random
 
@@ -10,18 +10,17 @@ import vocaquiz
 
 # Credential info
 import os
-from pathlib import 
+from pathlib import Path
 
 @st.cache_resource
 
 def load_credentials():
     """Streamlit Secrets로부터 자격증명 로드"""
     credentials_dict = st.secrets["google_credentials"]
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(
-        credentials_dict, 
-        scope=["https://spreadsheets.google.com/feeds", 
-               "https://www.googleapis.com/auth/drive"]
-    )
+    creds = Credentials.from_service_account_info(
+        st.secrets["google_credentials"],
+        scopes=["https://www.googleapis.com/auth/spreadsheets"]
+        )
     return creds
 
 
@@ -33,8 +32,7 @@ def load_nlp_model():
 def load_data(sheet_name):
     try:
     
-        creds = load_credentials()  # ✅ Secrets에서 로드
-        
+        creds = load_credentials()  # ✅ Secrets에서 로드        
         client = gspread.authorize(creds)
         
         # 워크북 열기
