@@ -25,7 +25,11 @@ def load_credentials():
 
 
 def load_nlp_model():
-    return spacy.load("en_core_web_sm")
+    try:
+        return spacy.load("en_core_web_sm")
+    except OSError:
+        download("en_core_web_sm")
+        return spacy.load("en_core_web_sm")
 
 # 인자로 시트 이름(sheet_name)을 받도록 수정됨
 @st.cache_data(ttl=600)
