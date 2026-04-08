@@ -11,6 +11,7 @@ import vocaquiz
 # Credential info
 import os
 from pathlib import Path
+from spacy.cli import download
 
 @st.cache_resource
 
