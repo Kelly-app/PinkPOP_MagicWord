@@ -21,8 +21,10 @@ def inject_custom_css():
 
     /* ========== 상단바 (학습모드 선택) ========== */
     .stSelectbox {
-        margin: 0 !important;
+        margin: 0 auto !important;          /* 블록 자체 중앙정렬 */
         padding: 0.5rem 1rem !important;
+        width: fit-content !important;      /* 필요한 만큼만 너비 */
+        text-align: center !important;
     }
 
     .stSelectbox > div {
@@ -518,6 +520,17 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
     st.markdown('<div class="bottom-buttons" id="bottom-buttons">', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
+    # 개선: Streamlit columns 대신 HTML/CSS flexbox 사용
+    st.markdown("""
+    <div style="
+        display: flex;
+        gap: 0.8rem;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+    ">
+    """, unsafe_allow_html=True)
     
     with col1:
         check_clicked = st.button(

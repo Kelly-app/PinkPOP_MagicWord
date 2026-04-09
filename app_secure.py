@@ -22,8 +22,6 @@ def load_credentials():
         )
     return creds
 
-
-
 # 인자로 시트 이름(sheet_name)을 받도록 수정됨
 @st.cache_data(ttl=600)
 def load_data(sheet_name):
@@ -89,7 +87,13 @@ def next_fillblank_question(data):
     st.session_state['answers'] = answers
     st.session_state['show_hint'] = False
     st.session_state['show_answer'] = False
-
+ 
+    # ➕ 다음 줄 추가: 입력값 초기화
+   # for i in range(len(answers)):
+     #   st.session_state['answers'] = "  "  # 핵심: key 이름이 build_ui_layout의 key와 일치해야 함
+ 
+        
+        
 def run_fillblank_logic(data):
     """빈칸 채우기 메인 실행 함수"""
     if 'kor' not in st.session_state or not st.session_state['kor']:
@@ -134,9 +138,7 @@ def run_fillblank_logic(data):
 def main():
     # 🔥 브라우저 탭 이름과 아이콘을 보석으로 변경
     st.set_page_config(page_title="PinkPOP Magic Word Land", page_icon="💎", layout="wide")
-      # 1. h1 태그로 타이틀 추가
-    #st.markdown("<h1>학습모드를 확인하세요</h1>", unsafe_allow_html=True)
-    
+    uilayout.inject_custom_css()
     # 2. 기존 셀렉트박스 (라벨은 비우거나 간단히 처리)
     mode = st.selectbox("🎯학습모드를 확인하세요", ["✨ 빈칸채우기 (문장)", "📖 Voca Quiz (영단어)"])
   
