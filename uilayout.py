@@ -127,7 +127,7 @@ def inject_custom_css():
     }
 
     .english-sentence {
-        font-family: 'Comic Sans MS', cursive;
+        font-family: 'Helvetica Neue', cursive;
         font-size: 1.3rem;
         text-align: center;
         padding: 1.2rem;
