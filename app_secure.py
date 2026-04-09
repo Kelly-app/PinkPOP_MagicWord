@@ -1,7 +1,6 @@
 import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
-import spacy
 import random
 
 # 분리된 모듈 불러오기
@@ -11,7 +10,6 @@ import vocaquiz
 # Credential info
 import os
 from pathlib import Path
-from spacy.cli import download
 
 @st.cache_resource
 
@@ -25,12 +23,6 @@ def load_credentials():
     return creds
 
 
-def load_nlp_model():
-    try:
-        return spacy.load("en_core_web_sm")
-    except OSError:
-        download("en_core_web_sm")
-        return spacy.load("en_core_web_sm")
 
 # 인자로 시트 이름(sheet_name)을 받도록 수정됨
 @st.cache_data(ttl=600)
@@ -60,27 +52,28 @@ def load_data(sheet_name):
         return []
 
 def create_blank_sentence(english_sentence):
-    nlp = load_nlp_model()
-    doc = nlp(english_sentence)
-    candidates = [token for token in doc if token.pos_ in ['VERB', 'ADJ', 'ADV'] and token.is_alpha]
+    # 1. 단어 분리
+    words = english_sentence.split()
+    
+
+    # 2. 후보 단어 선정 (규칙 기반)
+    candidates = [
+        w for w in words
+        if len(w) > 4 and w.isalpha() or w.endswith(("ed", "ing", "ly"))
+    ]
+    
+    # 3. 후보 없을 경우 예외 처리
     if not candidates:
-        candidates = [token for token in doc if token.pos_ in ['NOUN'] and token.is_alpha]
-        
-    num_blanks = min(2, len(candidates))
-    chosen_tokens = random.sample(candidates, num_blanks)
-    chosen_indices = [token.i for token in chosen_tokens]
+        return english_sentence, []
     
-    blanked_text = ""
-    answers = []
+    # 4. 랜덤 선택
+    answer = random.choice(candidates)
     
-    for token in doc:
-        if token.i in chosen_indices:
-            blanked_text += "______" + token.whitespace_
-            answers.append(token.text)
-        else:
-            blanked_text += token.text_with_ws
-            
-    return blanked_text.strip(), answers
+    # 5. 첫 번째 등장 단어만 blank 처리
+    blanked_sentence = english_sentence.replace(answer, "____", 1)
+    
+    return blanked_sentence, [answer]       
+
 
 def next_fillblank_question(data):
     if not data:
@@ -141,9 +134,12 @@ def run_fillblank_logic(data):
 def main():
     # 🔥 브라우저 탭 이름과 아이콘을 보석으로 변경
     st.set_page_config(page_title="PinkPOP Magic Word Land", page_icon="💎", layout="wide")
+      # 1. h1 태그로 타이틀 추가
+    #st.markdown("<h1>학습모드를 확인하세요</h1>", unsafe_allow_html=True)
     
-    mode = st.selectbox("🎯 학습 모드를 선택하세요!", ["✨ 빈칸채우기 (문장)", "📖 Voca Quiz (영단어)"])
-    
+    # 2. 기존 셀렉트박스 (라벨은 비우거나 간단히 처리)
+    mode = st.selectbox("🎯학습모드를 확인하세요", ["✨ 빈칸채우기 (문장)", "📖 Voca Quiz (영단어)"])
+  
     st.markdown("<br>", unsafe_allow_html=True) # 여백 추가
     
     if mode == "✨ 빈칸채우기 (문장)":
