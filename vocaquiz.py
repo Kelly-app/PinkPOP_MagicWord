@@ -9,6 +9,7 @@ def init_voca_state():
         st.session_state['voca_meaning'] = ""
         st.session_state['voca_show_hint'] = False
         st.session_state['voca_show_answer'] = False
+        st.session_state['voca_input_field'] = ""
 
 def next_voca_question(voca_data):
     if not voca_data:
@@ -20,6 +21,9 @@ def next_voca_question(voca_data):
     st.session_state['voca_meaning'] = str(row.get("English Meaning", ""))
     st.session_state['voca_show_hint'] = False
     st.session_state['voca_show_answer'] = False
+    # ➕ 입력값 초기화: 다음 문제로 이동할 때 input box 값 지우기
+    if 'voca_input_field' not in st.session_state:
+        st.session_state['voca_input_field'] = ""
 
 def run_voca_quiz(voca_data):
     """Voca Quiz 메인 실행 함수"""

@@ -175,18 +175,18 @@ def inject_custom_css():
         text-align: center;
     }
 
+    /* 기존 스타일 수정 */
     .stTextInput > div > div > input {
-        background: white !important;
-        border: 3px solid #98FB98 !important;
-        border-radius: 15px !important;
-        padding: 10px 14px !important;
-        font-size: 1.3rem !important;
-        text-align: center !important;
-        transition: all 0.3s ease !important;
-        font-weight: 600 !important;
-        color: #FF69B4 !important;
-        min-width: 150px !important;
-        max-width: 200px !important;
+        min-width: 80px !important;    /* 150px -> 80px로 축소 */
+        max-width: 120px !important;   /* 최대 너비 제한 */
+        padding: 2px 8px !important;  /* 안쪽 여백 축소 */
+        font-size: 1.1rem !important;  /* 폰트 크기 살짝 조절 */
+        height: 35px !important;       /* 높이 고정 */
+        border-radius: 8px !important; /* 둥근 느낌 유지 */
+    }
+
+    .input-group {
+        gap: 0.5rem !important;        /* 간격 최소화 */
     }
 
     .stTextInput > div > div > input:focus {
@@ -198,7 +198,11 @@ def inject_custom_css():
     .stTextInput > div > div > input::placeholder {
         color: #ccc !important;
     }
-
+    
+    /* 입력 필드 사이의 간격(마진) 최소화 */
+    div[data-testid="stVerticalBlock"] > div {
+        gap: 0.5rem !important;
+    }
     /* ========== Log Message 영역 ========== */
     .log-message {
         width: 100%;
@@ -444,25 +448,23 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
     6. Form Submit
     7. 하단 고정 버튼
     """
-    inject_custom_css()
-    render_mini_hero()
-    
+
     # ========== 메인 컨테이너 시작 ==========
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
-    # --- [수정] 한국어 문제 영역 추가 ---
+    # --- [수정] 한국어 /영어문제 영역 추가 ---<div class="problem-label">🌟 한글 문장이에요.</div>
     st.markdown(f"""
-    <div class="problem-box">
-        <div class="problem-label">🌟 한글 문장이에요.</div>
+    <div class="problem-box">      
         <div class="korean-sentence">{korean_sentence}</div>
+        <div class="english-sentence">{english_blanked_sentence}</div>
     </div>
     """, unsafe_allow_html=True)
     # --- 영어 문장 영역 ---
-    st.markdown(f"""
-    <div class="english-section">
-        <div class="english-label">📝 영어 문장이에요</div>
-    </div>
-    """, unsafe_allow_html=True)
-    st.markdown(f'<div class="english-sentence">{english_blanked_sentence}</div>', unsafe_allow_html=True)
+    #st.markdown(f"""
+    # <div class="english-section">
+    #     <div class="english-label">📝 영어 문장이에요</div>
+    # </div>
+    # """, unsafe_allow_html=True)
+    #st.markdown(f'<div class="english-sentence">{english_blanked_sentence}</div>', unsafe_allow_html=True)
     
     # --- 입력 필드 레이블 ---
     st.markdown("""
@@ -470,24 +472,23 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
     """, unsafe_allow_html=True)
     
     with st.form(key='answer_form'):
-        # --- 입력 필드들 (2개 그룹) ---
-        st.markdown('<div class="input-group">', unsafe_allow_html=True)
+        # 컨테이너 생성 (CSS로 가로 정렬 강제)
+        st.markdown('<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">', unsafe_allow_html=True)
         
-        user_answers = []
-        for i in range(len(answers)):
-            st.markdown(f"""
-            <div class="input-item">
-                <span class="input-icon">({i+1})</span>
-            </div>
-            """, unsafe_allow_html=True)
-            ans = st.text_input(
-                f"빈칸 {i+1}",
-                key=f"input_{i}",
-                placeholder="답",
-                label_visibility="collapsed"
-            )
-            user_answers.append(ans)
-        
+        # 컬렉션을 사용하여 한 줄에 배치 (예: 3칸이면 3컬럼)
+        cols = st.columns(len(answers)) 
+        user_answers = []        
+
+        for i, ans_text in enumerate(answers):
+            with cols[i]:
+                # 라벨을 (1), (2) 형태로 짧게 넣어 공간 절약
+                ans = st.text_input(
+                    f"({i+1})", 
+                    key=f"input_{i}",
+                    placeholder="입력",
+                    label_visibility="visible" # 숫자를 라벨로 써서 위젯 높이 축소
+                )
+                user_answers.append(ans)
         st.markdown('</div>', unsafe_allow_html=True)
         
         # --- Log Message 영역 ---
@@ -570,15 +571,19 @@ def build_voca_ui_layout(word, meaning, show_hint, show_answer):
     """
     새로운 와이어프레임 기준 Voca Quiz 레이아웃
     """
-    inject_custom_css()
-    render_mini_hero()
+
     
     # ========== 메인 컨테이너 시작 ==========
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
-    
+    # st.markdown(f"""
+    #<div class="english-section">
+    #    <div class="english-label">🔤 영어 단어</div>
+    #</div>
+    #""", unsafe_allow_html=True)
+    st.markdown(f'<div class="english-sentence">{word}</div>', unsafe_allow_html=True)
     # --- 입력 레이블 ---
     st.markdown("""
-    <div class="input-label">✏️ 영어 뜻을 입력하세요</div>
+    <div class="input-label">✏️ Input English Meaning</div>
     """, unsafe_allow_html=True)
     
     with st.form(key='voca_form'):
