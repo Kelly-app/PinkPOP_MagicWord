@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 
+
 def inject_custom_css():
     """
     새로운 와이어프레임 기준 CSS
@@ -8,6 +9,8 @@ def inject_custom_css():
     """
     st.markdown("""
     <style>
+    @import url('https://googleapis.com');
+    
     /* ========== 전체 배경 ========== */
     .stApp {
         background-color: #FFF0F5;
@@ -38,7 +41,7 @@ def inject_custom_css():
 
     .mini-hero h1 {
         color: white;
-        font-family: 'Comic Sans MS', cursive;
+        font-family: 'Comic Neue', sans-serif,'Comic Sans MS', cursive;
         font-size: 2.0rem;
         text-shadow: 2px 2px 0px #FF69B4;
         margin: 0;
