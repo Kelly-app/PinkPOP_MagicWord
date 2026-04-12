@@ -19,26 +19,6 @@ def inject_custom_css():
         padding: 0 !important;
     }
 
-    /* ========== 상단바 (학습모드 선택) ========== */
-    .stSelectbox {
-        margin: 0 auto !important;          /* 블록 자체 중앙정렬 */
-        padding: 0.5rem 1rem !important;
-        width: fit-content !important;      /* 필요한 만큼만 너비 */
-        text-align: center !important;
-    }
-
-    .stSelectbox > div {
-        text-align: center !important;
-    }
-
-    .stSelectbox label {
-        font-size: 1.3rem !important;
-        font-weight: bold !important;
-        color: #FF69B4 !important;
-        text-align: center !important;
-        display: block !important;
-        margin-bottom: 0.5rem !important;
-    }
 
     /* ========== Mini Hero Header (80~100px) ========== */
     .mini-hero {
@@ -64,6 +44,11 @@ def inject_custom_css():
         margin: 0;
         letter-spacing: 1px;
         text-align: center;
+        display: flex;                          /* ➕ Flexbox 사용 */
+        align-items: center;                    /* ➕ 수직 중앙정렬 */
+        justify-content: center;                /* ➕ 수평 중앙정렬 */
+        gap: 0.5rem;                            /* ➕ 이모지와 텍스트 간격 */
+        flex-wrap: wrap;                        /* ➕ 반응형 대비 */
     }
 
     /* ========== 메인 컨테이너 (중앙 정렬) ========== */
@@ -75,62 +60,87 @@ def inject_custom_css():
         width: 100%;
         max-width: 700px;
         margin: 0 auto;
-        padding: 1rem 0.5rem;
-        gap: 1rem;
+        /*padding: 1rem;*/
+        gap: 0.5rem;
+        
+        /* ✅ 반응형 패딩 조정 */
+        @media (max-width: 428px) {  /* 아이폰 최대 너비 */
+            padding: 0.75rem;
+            gap: 0.375rem;
+        }
+    }
+    /* ========== 상단바 (학습모드 선택) - 강조 버전 ========== */
+    .stSelectbox {
+        margin: 0 auto !important;          /* 블록 자체 중앙정렬 */
+        width: fit-content !important;      /* 필요한 만큼만 너비 */
+        text-align: center !important;
+        background-color: white !important;     /* ➕ 배경색 추가 */
+       
+        /* ✅ 더 자연스러운 둥근 모서리 */
+        border-radius: 15px !important;         /* ➕ 둥근 모서리 */
+        box-shadow: 0 4px 12px rgba(255, 105, 180, 0.25) !important;  /* ➕ 부드러운 그림자 */
+        border: 2px solid #FFB6C1 !important;   /* ➕ 테두리 추가 */
+        
+        /* ✅ 더 나은 호환성을 위한 너비 설정 */
+        width: auto;
+        max-width: 100%;
+        min-width: min(300px, 80vw);  /* ✅ 최소 너비 보장 */
+        /* ✅ 터치 친화적 패딩 */
+        padding: 0.5rem clamp(1.5rem, 4vw, 2rem);  /* ✅ 반응형 좌우 패딩 */
+        
     }
 
-    /* ========== 문제 영역 (한국어) - 삭제됨 ========== */
+    .stSelectbox > div {
+        text-align: center !important;
+    }
+
+    .stSelectbox label {
+        font-size: 1.3rem !important;
+        font-weight: bold !important;
+        color: #FF69B4 !important;
+        text-align: center !important;
+        display: block !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* ➕ 추가: selectbox 드롭다운 버튼 강조 */
+    .stSelectbox [data-testid="selectbox"] {
+        background-color: #FFF5FB !important;
+        border: 2px solid #FFB6C1 !important;
+        border-radius: 10px !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    /* ========== 문제 영역 (한국어) problem-box: KR sentence + En Section ========== */
     .problem-box {
         width: 100%;
         max-width: 600px;
         background-color: linear-gradient(to right, #FFF0F5, #FFFFFF);
-        padding: 1.2rem;
         border-radius: 20px;
-        border: 3px solid #FFB6C1;
+        border: 1px solid #FFB6C1;
         box-shadow: 0 8px 20px rgba(255, 182, 193, 0.4);
         text-align: center;
         margin-bottom: 0.5rem;
-
-    }
-
-    .problem-label {
-        font-size: 1.1rem;
-        color: #C4DF25;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-        text-align: center;
     }
 
     .korean-sentence {
-        font-family: 'Nanum Gothic', sans-serif;
-        font-size: 1.3rem;
-        text-align: center;
-        color: #DE8499;
-        font-weight: bold;
-        word-break: keep-all;
-        line-height: 1.4;
+        background-color: #FFFFFF !important;
+        border-radius: 20px !important;
+        padding: 0.5rem !important;
+        margin: 1rem auto !important; /* 위아래 1rem, 좌우 auto로 중앙 정렬 */
+        width: 90% !important;        /* PC에서도 너무 넓지 않게 조절 */
+        max-width: 800px !important;   /* 최대 너비 제한 */
+        text-align: center !important; /* 텍스트 중앙 정렬 */
+        box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3) !important;
     }
 
-    /* ========== 영어 문장 영역 ========== */
-    .english-section {
-        width: 100%;
-        max-width: 600px;
-        text-align: center;
-    }
-
-    .english-label {
-        font-size: 1.1rem;
-        color: #C4DF25;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-        text-align: center;
-    }
-
+    /* ========== 영어 문장 box + sentence ========== */
+   
     .english-sentence {
         font-family: 'Helvetica Neue', cursive;
         font-size: 1.3rem;
         text-align: center;
-        padding: 1.2rem;
+        padding: 1rem;                 /* ➕ 상하 패딩 증가 */
         color: #FF69B4;
         background: linear-gradient(to right, #FFF0F5, #FFFFFF);
         border-radius: 15px;
@@ -138,6 +148,12 @@ def inject_custom_css():
         font-weight: bold;
         line-height: 1.8;
         box-shadow: 0 4px 10px rgba(255, 182, 193, 0.2);
+        width: 100%;                            /* ➕ 전체 너비 */
+        max-width: 600px;                       /* ➕ 최대 너비 제한 */
+        display: flex;                          /* ➕ Flexbox */
+        flex-direction: column;                 /* ➕ 세로 배치 */
+        align-items: center;                    /* ➕ 중앙정렬 */
+        justify-content: center;                /* ➕ 수직 중앙정렬 */
     }
 
     /* ========== 입력 영역 레이블 ========== */
@@ -153,9 +169,9 @@ def inject_custom_css():
     .input-group {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: center;                    /* ✅ 강화: 상하 여백 동등 */
         justify-content: center;
-        gap: 1rem;
+        gap: 0.8rem;                            /* ➕ 간격 미세조정: 1rem→0.8rem */
         width: 100%;
         max-width: 600px;
         flex-wrap: wrap;
@@ -163,8 +179,9 @@ def inject_custom_css():
 
     .input-item {
         display: flex;
-        align-items: center;
+        align-items: center;                    /* ✅ 수직 중앙정렬 강화 */
         gap: 0.5rem;
+        height: 100%;                           /* ➕ 높이 최대화 */
     }
 
     .input-icon {
@@ -175,18 +192,20 @@ def inject_custom_css():
         text-align: center;
     }
 
-    /* 기존 스타일 수정 */
+    /* 입력 필드 스타일 (텍스트 중앙정렬 추가) */
     .stTextInput > div > div > input {
-        min-width: 80px !important;    /* 150px -> 80px로 축소 */
-        max-width: 120px !important;   /* 최대 너비 제한 */
-        padding: 2px 8px !important;  /* 안쪽 여백 축소 */
-        font-size: 1.1rem !important;  /* 폰트 크기 살짝 조절 */
-        height: 35px !important;       /* 높이 고정 */
-        border-radius: 8px !important; /* 둥근 느낌 유지 */
+        min-width: 80px !important;
+        max-width: 120px !important;
+        padding: 8px 10px !important;           /* ➕ 패딩 증가: 2px 8px → 8px 10px */
+        font-size: 1.1rem !important;
+        height: 40px !important;                /* ➕ 높이 조정: 35px → 40px */
+        border-radius: 8px !important;
+        text-align: center !important;          /* ➕ 입력 텍스트 중앙정렬 */
+        vertical-align: middle !important;      /* ➕ 수직 중앙정렬 */
     }
 
     .input-group {
-        gap: 0.5rem !important;        /* 간격 최소화 */
+        gap: 0.5rem !important;
     }
 
     .stTextInput > div > div > input:focus {
@@ -197,6 +216,7 @@ def inject_custom_css():
 
     .stTextInput > div > div > input::placeholder {
         color: #ccc !important;
+        text-align: center !important;          /* ➕ placeholder도 중앙정렬 */
     }
     
     /* 입력 필드 사이의 간격(마진) 최소화 */
@@ -209,57 +229,107 @@ def inject_custom_css():
         max-width: 600px;
         text-align: center;
         min-height: 2rem;
+        display: flex;
+        justify-content: center; /* 수평 중앙 정렬 */
+        align-items: center;     /* 수직 중앙 정렬 */
+        margin: 0 auto;          /* 좌우 자동 마진 */
     }
 
     .stSuccess {
         background: #E8F8F5 !important;
         border: 2px solid #27AE60 !important;
         border-radius: 15px !important;
-        padding: 1rem !important;
+        padding: 1rem 1.5rem !important;
         text-align: center !important;
         font-size: 1.3rem !important;
+        display: flex;           /* Flexbox */
+        justify-content: center; /* 수평 중앙 정렬 */
+        align-items: center;     /* 수직 중앙 정렬 */
+        margin: 0 auto;          /* 좌우 자동 마진 */
+        min-height: 3rem;        /* 최소 높이 */
+        width: 100%;             /* 전체 너비 */
+        max-width: 600px;        /*최대 너비 */
+        margin: 0 auto;          /*중앙 정렬 */
+
     }
 
     .stError {
         background: #FADBD8 !important;
         border: 2px solid #E74C3C !important;
         border-radius: 15px !important;
-        padding: 1rem !important;
+        padding: 1rem 1.5rem!important; /*좌우 패딩 증가 /
         text-align: center !important;
         font-size: 1.3rem !important;
+        display: flex            /* flex box */
+        justify-content: center; /* 수평 중앙 정렬 */
+        align-items: center;     /* 수직 중앙 정렬 */
+        margin: 1rem auto;          /* 좌우 자동 마진 */
+        min-height: 3rem;        /* 최소 높이 */
+        width: 100%;             /* 전체 너비 */
+        max-width: 600px;        /*최대 너비 */        
     }
 
     .stInfo {
         background: #D6EAF8 !important;
         border: 2px solid #3498DB !important;
         border-radius: 15px !important;
-        padding: 1rem !important;
+        padding: 1rem 1.5rem!important; /*좌우 패딩 증가 /
         text-align: center !important;
         font-size: 1.3rem !important;
+        display: flex            /* flex box */
+        justify-content: center; /* 수평 중앙 정렬 */
+        align-items: center;     /* 수직 중앙 정렬 */
+        margin: 0 auto;          /* 좌우 자동 마진 */
+        min-height: 3rem;        /* 최소 높이 */
+        width: 100%;             /* 전체 너비 */
+        max-width: 600px;        /*최대 너비 */
+        margin: 0 auto;          /*중앙 정렬 */
     }
 
     .stWarning {
         background: #FCF3CF !important;
         border: 2px solid #F39C12 !important;
         border-radius: 15px !important;
-        padding: 1rem !important;
+        padding: 1rem 1.5rem!important;
         text-align: center !important;
         font-size: 1.3rem !important;
+        display: flex            /* flex box */
+        justify-content: center; /* 수평 중앙 정렬 */
+        align-items: center;     /* 수직 중앙 정렬 */
+        margin: 0 auto;          /* 좌우 자동 마진 */
+        min-height: 3rem;        /* 최소 높이 */
+        width: 100%;             /* 전체 너비 */
+        max-width: 600px;        /*최대 너비 */
+        margin: 0 auto;          /*중앙 정렬 */
     }
 
     /* ========== Form Submit Button ========== */
+    .stFormSubmitButton {
+        display: flex !important;               /* ➕ Flexbox 래퍼 */
+        justify-content: center !important;     /* ➕ 중앙정렬 */
+        align-items: center !important;         /* ➕ 수직 중앙정렬 */
+        width: 100% !important;
+        margin-bottom: 0rem !important;         /* 에러 메시지와의 간격 확보 */
+        padding-bottom: 0.5rem !important;  /* 기본 패딩을 절반으로 축소 */
+    }
+
     .stFormSubmitButton > button {
         background-color: #FF69B4 !important;
         color: white !important;
-        width: 100% !important;
+        width: fit-content !important;          /* ➕ 변경: 100% → fit-content */
+        min-width: 150px !important;            /* ➕ 최소 너비 */
         max-width: 600px !important;
         font-size: 1.3rem !important;
         border-radius: 20px !important;
         border: none !important;
-        padding: 12px 24px !important;
+        padding: 12px 40px !important;          /* ➕ 좌우 패딩 증가: 24px → 40px */
         font-weight: bold !important;
         transition: all 0.3s ease !important;
-        margin-bottom: 2rem !important;
+        margin-bottom: 0.5rem !important;
+        display: flex !important;               /* ➕ Flexbox */
+        align-items: center !important;         /* ➕ 수직 중앙정렬 */
+        justify-content: center !important;     /* ➕ 수평 중앙정렬 */
+        gap: 0.5rem !important;                 /* ➕ 아이콘과 텍스트 간격 */
     }
 
     .stFormSubmitButton > button:hover {
@@ -267,7 +337,41 @@ def inject_custom_css():
         box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4) !important;
         transform: translateY(-2px) !important;
     }
+    
+    /* 2. 공통 박스 스타일 (기존 st.info/warning 느낌) */
+    .custom-box {
+        width: 100%;
+        max-width: 800px; /* 너무 넓으면 가독성이 떨어지므로 제한 */
+        padding: 1rem;
+        border-radius: 0.5rem;
+        text-align: center; /* 텍스트 가로 중앙 정렬 */
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
 
+    /* 3. 힌트 박스 (Blue) */
+    .hint-box {
+        background-color: #e1f5fe;
+        color: #01579b;
+        border: 1px solid #b3e5fc;
+    }
+
+    /* 4. 정답 박스 (Orange) */
+    .answer-box {
+        background-color: #fff3e0;
+        color: #e65100;
+        border: 1px solid #ffe0b2;
+    }
+    
+    /* 5. 전체 문장 텍스트 */
+    .full-sentence {
+        text-align: center;
+        font-size: 1.3rem;
+        color: #444;
+        margin-top: 10px;
+        font-weight: 600;
+    }
+    
     /* ========== 하단 버튼 (고정) ========== */
     .bottom-buttons {
         position: fixed;
@@ -275,7 +379,7 @@ def inject_custom_css():
         left: 0;
         right: 0;
         background: linear-gradient(to top, #FFF0F5, #FFFFFF);
-        padding: 1rem;
+        padding: 0.5rem;
         display: flex;
         gap: 0.8rem;
         justify-content: center;
@@ -399,11 +503,11 @@ def inject_custom_css():
         }
 
         .main-container {
-            padding: 0.8rem 0.3rem;
+            padding: 0.5rem 0.3rem;
         }
 
         .problem-box {
-            padding: 1rem;
+            padding: 0.5rem;
         }
     }
 
@@ -441,36 +545,25 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
     
     순서:
     1. Mini Hero
-    2. 한국어 문제 (박스)
-    3. 영어 문장
+    2. 학습모드 선택 
+    3. 한국어 문제 + 영어 문장
     4. 입력 필드 (2개 나란히)
     5. Log Message
     6. Form Submit
     7. 하단 고정 버튼
+    8. 에러메세지. 별* 획득 
     """
 
     # ========== 메인 컨테이너 시작 ==========
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
-    # --- [수정] 한국어 /영어문제 영역 추가 ---<div class="problem-label">🌟 한글 문장이에요.</div>
+    # --- [수정] 한국어 /영어문제 영역 추가
     st.markdown(f"""
     <div class="problem-box">      
         <div class="korean-sentence">{korean_sentence}</div>
         <div class="english-sentence">{english_blanked_sentence}</div>
     </div>
     """, unsafe_allow_html=True)
-    # --- 영어 문장 영역 ---
-    #st.markdown(f"""
-    # <div class="english-section">
-    #     <div class="english-label">📝 영어 문장이에요</div>
-    # </div>
-    # """, unsafe_allow_html=True)
-    #st.markdown(f'<div class="english-sentence">{english_blanked_sentence}</div>', unsafe_allow_html=True)
-    
-    # --- 입력 필드 레이블 ---
-    st.markdown("""
-    <div class="input-label">✏️ 빈칸을 채워주세요</div>
-    """, unsafe_allow_html=True)
-    
+
     with st.form(key='answer_form'):
         # 컨테이너 생성 (CSS로 가로 정렬 강제)
         st.markdown('<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">', unsafe_allow_html=True)
@@ -485,7 +578,7 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
                 ans = st.text_input(
                     f"({i+1})", 
                     key=f"input_{i}",
-                    placeholder="입력",
+                    placeholder="Fill here",
                     label_visibility="visible" # 숫자를 라벨로 써서 위젯 높이 축소
                 )
                 user_answers.append(ans)
@@ -496,18 +589,21 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
         
         if show_hint:
             hint_text = " / ".join([f"({i+1}) '{ans[:2]}...'" for i, ans in enumerate(answers)])
-            st.info(f"💡 힌트: {hint_text}")
-        
+            # 커스텀 힌트 박스 적용
+            st.markdown(f'<div class="custom-box hint-box">💡 Hint: {hint_text}</div>', unsafe_allow_html=True)
+
         if show_answer:
             answer_text = " / ".join([f"({i+1}) {ans}" for i, ans in enumerate(answers)])
-            st.warning(f"✅ 정답: {answer_text}")
-            st.markdown(f"<p style='text-align: center; font-size: 1.3rem; color: #666; margin: 0.5rem 0 0 0;'><strong>전체:</strong> {full_english_sentence}</p>", unsafe_allow_html=True)
+            # 커스텀 정답 박스 적용
+            st.markdown(f'<div class="custom-box answer-box">✅ Right Answer: {answer_text}</div>', unsafe_allow_html=True)
+            # 전체 문장도 클래스로 관리
+            st.markdown(f'<div class="full-sentence"><strong>전체:</strong> {full_english_sentence}</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
         
         # --- Form Submit 버튼 ---
         submit_clicked = st.form_submit_button(
-            label='🔮 정답 확인하기',
+            label='🔮 Check Answer',
             type="primary",
             use_container_width=True
         )
@@ -515,7 +611,7 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
     st.markdown('</div>', unsafe_allow_html=True)  # main-container 종료
     
     # 하단 버튼 영역을 위한 여백
-    st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 0.5rem;'></div>", unsafe_allow_html=True)
     
     # ========== 하단 버튼 (고정 위치) ==========
     st.markdown('<div class="bottom-buttons" id="bottom-buttons">', unsafe_allow_html=True)
@@ -535,26 +631,26 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
     
     with col1:
         check_clicked = st.button(
-            "✅ 확인",
+            "✅ Check",
             key="btn_check",
             use_container_width=True,
-            help="다시 확인"
+            help="Recheck"
         )
     
     with col2:
         hint_clicked = st.button(
-            "💡 힌트",
+            "💡 Hint",
             key="btn_hint",
             use_container_width=True,
-            help="첫 글자 확인"
+            help="Check chars"
         )
     
     with col3:
         next_clicked = st.button(
-            "⏭️ 다음",
+            "⏭️ Next",
             key="btn_next",
             use_container_width=True,
-            help="다음 문제"
+            help="Next"
         )
     
     st.markdown('</div>', unsafe_allow_html=True)
@@ -575,11 +671,6 @@ def build_voca_ui_layout(word, meaning, show_hint, show_answer):
     
     # ========== 메인 컨테이너 시작 ==========
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
-    # st.markdown(f"""
-    #<div class="english-section">
-    #    <div class="english-label">🔤 영어 단어</div>
-    #</div>
-    #""", unsafe_allow_html=True)
     st.markdown(f'<div class="english-sentence">{word}</div>', unsafe_allow_html=True)
     # --- 입력 레이블 ---
     st.markdown("""
