@@ -56,7 +56,7 @@ def create_blank_sentence(english_sentence):
     # 2. 후보 단어 선정 (규칙 기반)
     candidates = [
         w for w in words
-        if len(w) > 3 and w.isalpha() or w.endswith(("ed", "ing", "ly","ow","ch","ip","ry","le","able", "al", "ful", "ic", "ish", "ive", "less", "ous"))
+        if len(w) > 3 and w.isalpha() or w.endswith(("ed", "ing", "ly","ow","ch","ip","ry","le","able", "al", "ful", "ic", "ish", "ive", "less", "ous","ile","ing","larly"))
     ]
     
     # 3. 후보 없을 경우 예외 처리
@@ -64,8 +64,9 @@ def create_blank_sentence(english_sentence):
         return english_sentence, []
     
     # 4. 랜덤 선택
-    num_to_select = min(len(candidates), 4)
+    num_to_select = min(len(candidates), 3)
     selected_raw = random.sample(candidates, num_to_select)
+    
     # 🔥 [버그 수정 핵심]: 문장에서 단어가 나타나는 인덱스 순서대로 정답을 재정렬합니다.
     # 이렇게 해야 (1), (2), (3) 번호가 문장 앞 순서와 일치하게 됩니다.
     selected_raw.sort(key=lambda x: english_sentence.find(x))    
@@ -169,11 +170,11 @@ def run_fillblank_logic(data):
 
 def main():
     # 🔥 브라우저 탭 이름과 아이콘을 보석으로 변경
-    st.set_page_config(page_title="PinkPOP Magic Word Land", page_icon="💎", layout="wide")
+    st.set_page_config(page_title="PinkPOP Words", page_icon="💎", layout="wide")
     uilayout.inject_custom_css() 
     uilayout.render_mini_hero()
      # 2. 기존 셀렉트박스 (라벨은 비우거나 간단히 처리)
-    mode = st.selectbox("🎯학습모드를 확인하세요", ["✨ 빈칸채우기 (문장)", "📖 Voca Quiz (영단어)"])
+    mode = st.selectbox("🎯학습모드를 확인하세요", ["✨ 빈칸채우기 (문장)", "Coming Soon"])
   
     st.markdown("<br>", unsafe_allow_html=True) # 여백 추가
     

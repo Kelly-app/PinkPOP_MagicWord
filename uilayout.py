@@ -551,7 +551,7 @@ def inject_custom_css():
     </style>
     """, unsafe_allow_html=True)
 
-def render_mini_hero(app_title="✨ PinkPOP Word Land 💎"):
+def render_mini_hero(app_title="✨PinkPOP Words💎"):
     """Mini Hero Header (80~100px)"""
     st.markdown(f"""
     <div class="mini-hero">
