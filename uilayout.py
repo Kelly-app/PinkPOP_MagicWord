@@ -12,8 +12,8 @@ def inject_custom_css():
     /* ✅ 올바른 문법 */
     @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
 
-/* 그리고 CSS에서 사용 */
-font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+    /* 그리고 CSS에서 사용 */
+    font-family: 'Comic Neue', 'Comic Sans MS', 'Roboto', cursive;
     
     /* ========== 전체 배경 ========== */
     .stApp {
@@ -144,7 +144,7 @@ font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
     /* ========== 영어 문장 box + sentence ========== */
    
     .english-sentence {
-        font-family: 'Helvetica Neue', cursive;
+        font-family: 'Comic Neue', 'Comic Sans MS', 'Roboto', cursive;
         font-size: 1.3rem;
         text-align: center;
         padding: 1rem;                 /* ➕ 상하 패딩 증가 */
@@ -598,7 +598,7 @@ def build_ui_layout(korean_sentence, english_blanked_sentence, answers, full_eng
                 ans = st.text_input(
                     f"({i+1})", 
                     key=f"input_{i}",
-                    placeholder="Fill here",
+                    placeholder=" ",
                     label_visibility="visible" # 숫자를 라벨로 써서 위젯 높이 축소
                 )
                 user_answers.append(ans)

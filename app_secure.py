@@ -96,13 +96,7 @@ def next_fillblank_question(data):
     st.session_state['show_hint'] = False
     st.session_state['show_answer'] = False
  
-    # 2. 🔥 이슈 해결 핵심: 입력 필드 초기화 (uilayout.py의 key=f"input_{i}"와 일치시켜야 함)
-    # 현재 존재하는 모든 input_{i} 키를 찾아 빈 문자열로 초기화합니다.
-    i = 0
-    while f"input_{i}" in st.session_state:
-        st.session_state[f"input_{i}"] = ""
-        i += 1 
-        
+      
         
 def run_fillblank_logic(data):
     """빈칸 채우기 메인 실행 함수"""
@@ -137,11 +131,23 @@ def run_fillblank_logic(data):
     if ui_result['next_clicked']:
         # 🔥 핵심: 기존 입력 필드(input_0, input_1 등)의 값을 세션에서 삭제합니다.
         # 값을 ""로 수정하면 오류가 나지만, del로 삭제하면 새 위젯으로 인식하여 초기화됩니다.
-        for key in list(st.session_state.keys()):
-            if key.startswith("input_"):
-                del st.session_state[key]       
+
         next_fillblank_question(data)
         st.rerun()
+        # 컬렉션을 사용하여 한 줄에 배치 (예: 3칸이면 3컬럼)
+        cols = st.columns(len(answers)) 
+        user_answers = []        
+
+        i = 0
+        for key in list(st.session_state.keys()):
+            if key.startswith("input_"):
+                # 라벨을 (1), (2) 형태로 짧게 넣어 공간 절약
+                ans = st.text_input(
+                    f"({i+1})", 
+                    key=f"input_{i}",
+                    placeholder=" ",
+                    label_visibility="visible" # 숫자를 라벨로 써서 위젯 높이 축소
+                )
         
     if ui_result['submit_clicked']:
         correct_answers = st.session_state.get('answers', [])
