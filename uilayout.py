@@ -9,7 +9,11 @@ def inject_custom_css():
     """
     st.markdown("""
     <style>
-    @import url('https://googleapis.com');
+    /* ✅ 올바른 문법 */
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+
+/* 그리고 CSS에서 사용 */
+font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
     
     /* ========== 전체 배경 ========== */
     .stApp {
@@ -41,7 +45,7 @@ def inject_custom_css():
 
     .mini-hero h1 {
         color: white;
-        font-family: 'Comic Neue', sans-serif,'Comic Sans MS', cursive;
+        font-family: 'Comic Neue', sans-serif,'Roboto', cursive;
         font-size: 2.0rem;
         text-shadow: 2px 2px 0px #FF69B4;
         margin: 0;
@@ -63,19 +67,24 @@ def inject_custom_css():
         width: 100%;
         max-width: 700px;
         margin: 0 auto;
-        /*padding: 1rem;*/
+        padding: 1rem;
         gap: 0.5rem;
         
         /* ✅ 반응형 패딩 조정 */
         @media (max-width: 428px) {  /* 아이폰 최대 너비 */
-            padding: 0.75rem;
-            gap: 0.375rem;
+            .main-container {
+                padding: 0.75rem;
+                gap: 0.375rem;
+            }
         }
     }
     /* ========== 상단바 (학습모드 선택) - 강조 버전 ========== */
     .stSelectbox {
-        margin: 0 auto !important;          /* 블록 자체 중앙정렬 */
-        width: fit-content !important;      /* 필요한 만큼만 너비 */
+        width: 90vw !important;        /* 화면의 90% */
+        max-width: 400px !important;   /* 최대 400px */
+        margin: 0 auto !important;
+        padding: 0.8rem 1.5rem !important;
+    
         text-align: center !important;
         background-color: white !important;     /* ➕ 배경색 추가 */
        
@@ -84,13 +93,8 @@ def inject_custom_css():
         box-shadow: 0 4px 12px rgba(255, 105, 180, 0.25) !important;  /* ➕ 부드러운 그림자 */
         border: 2px solid #FFB6C1 !important;   /* ➕ 테두리 추가 */
         
-        /* ✅ 더 나은 호환성을 위한 너비 설정 */
-        width: auto;
-        max-width: 100%;
-        min-width: min(300px, 80vw);  /* ✅ 최소 너비 보장 */
-        /* ✅ 터치 친화적 패딩 */
-        padding: 0.5rem clamp(1.5rem, 4vw, 2rem);  /* ✅ 반응형 좌우 패딩 */
-        
+        /* ✅ 더 나은 호환성을 위한 너비 설정 */       
+        min-width: min(300px, 80vw);  /* ✅ 최소 너비 보장 */       
     }
 
     .stSelectbox > div {
@@ -203,6 +207,7 @@ def inject_custom_css():
         font-size: 1.1rem !important;
         height: 40px !important;                /* ➕ 높이 조정: 35px → 40px */
         border-radius: 8px !important;
+        
         text-align: center !important;          /* ➕ 입력 텍스트 중앙정렬 */
         vertical-align: middle !important;      /* ➕ 수직 중앙정렬 */
     }
@@ -218,7 +223,7 @@ def inject_custom_css():
     }
 
     .stTextInput > div > div > input::placeholder {
-        color: #ccc !important;
+        color: #150303 !important;
         text-align: center !important;          /* ➕ placeholder도 중앙정렬 */
     }
     
@@ -238,6 +243,17 @@ def inject_custom_css():
         margin: 0 auto;          /* 좌우 자동 마진 */
     }
 
+
+    .stSuccess, .stError, .stInfo, .stWarning {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 auto !important;  /* ➕ 추가 */
+        width: 100% !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
+    }
+    
     .stSuccess {
         background: #E8F8F5 !important;
         border: 2px solid #27AE60 !important;
@@ -245,15 +261,15 @@ def inject_custom_css():
         padding: 1rem 1.5rem !important;
         text-align: center !important;
         font-size: 1.3rem !important;
-        display: flex;           /* Flexbox */
-        justify-content: center; /* 수평 중앙 정렬 */
-        align-items: center;     /* 수직 중앙 정렬 */
-        margin: 0 auto;          /* 좌우 자동 마진 */
         min-height: 3rem;        /* 최소 높이 */
-        width: 100%;             /* 전체 너비 */
-        max-width: 600px;        /*최대 너비 */
-        margin: 0 auto;          /*중앙 정렬 */
-
+        /*display: flex;           /* Flexbox */
+        /* justify-content: center;  수평 중앙 정렬 */
+        /*  align-items: center;     수직 중앙 정렬 */
+        /* margin: 0 auto;          /* 좌우 자동 마진 */
+        
+        /* width: 100%;             /* 전체 너비 */
+        /* max-width: 600px;        /*최대 너비 */
+        /* margin: 0 auto;          /*중앙 정렬 */
     }
 
     .stError {
@@ -492,6 +508,7 @@ def inject_custom_css():
             min-width: 140px !important;
             max-width: 200px !important;
             font-size: 1.3rem !important;
+            text-align: center !important;
         }
 
         .bottom-buttons {

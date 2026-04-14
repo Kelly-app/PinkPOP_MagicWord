@@ -12,14 +12,13 @@ import os
 from pathlib import Path
 
 @st.cache_resource
-
 def load_credentials():
     """Streamlit Secrets로부터 자격증명 로드"""
     credentials_dict = st.secrets["google_credentials"]
     creds = Credentials.from_service_account_info(
         st.secrets["google_credentials"],
         scopes=["https://www.googleapis.com/auth/spreadsheets"]
-        )
+    )
     return creds
 
 # 인자로 시트 이름(sheet_name)을 받도록 수정됨
@@ -165,9 +164,9 @@ def run_fillblank_logic(data):
 def main():
     # 🔥 브라우저 탭 이름과 아이콘을 보석으로 변경
     st.set_page_config(page_title="PinkPOP Magic Word Land", page_icon="💎", layout="wide")
-    uilayout.render_mini_hero()
     uilayout.inject_custom_css() 
-    # 2. 기존 셀렉트박스 (라벨은 비우거나 간단히 처리)
+    uilayout.render_mini_hero()
+     # 2. 기존 셀렉트박스 (라벨은 비우거나 간단히 처리)
     mode = st.selectbox("🎯학습모드를 확인하세요", ["✨ 빈칸채우기 (문장)", "📖 Voca Quiz (영단어)"])
   
     st.markdown("<br>", unsafe_allow_html=True) # 여백 추가
